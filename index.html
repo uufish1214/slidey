@@ -6,97 +6,63 @@
     <title>Slidey</title>
     <style>
         :root {
-            /* 莫兰迪配色方案：拉开色相，清新舒适 */
-            --bg-color: #F7F7F7; 
-            --board-bg: #EEEEEE;
-            --text-main: #444444;
-            --text-sub: #999999;
-            
-            /* 方块颜色：粉、绿、蓝、黄 */
-            --color-1: #E0A0A0; /* 干枯玫瑰粉 */
-            --color-2: #95C5A8; /* 鼠尾草绿 */
-            --color-3: #9FB7CE; /* 雾霾蓝 */
-            --color-4: #E6D2B5; /* 奶油黄 */
+            --bg-color: #FFFFFF;
+            --board-bg: #F1EEE9;
+            --text-main: #4A4A4A;
+            --text-sub: #AAAAAA;
+
+            /* 清新莫兰迪 5 色 + 同色系深色描边 */
+            --c-0: #DCA7B0; --cb-0: #C28E9A; /* 豆沙粉 */
+            --c-1: #A8C8A8; --cb-1: #8CAE8C; /* 抹茶绿 */
+            --c-2: #A3BCD6; --cb-2: #86A2C2; /* 雾蓝 */
+            --c-3: #E6CFA5; --cb-3: #D2B888; /* 奶杏 */
+            --c-4: #BCAED4; --cb-4: #A395C4; /* 香芋紫 */
 
             --cell-size: 9vmin;
-            --gap: 3px; 
-            --radius: 6px; 
+            --gap: 3px;
         }
 
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif; 
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
-            height: 100vh;
-            width: 100vw;
+            height: 100vh; width: 100vw;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             touch-action: none;
         }
 
         header {
             height: 70px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding-top: 10px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: relative; padding-top: 10px; z-index: 50;
         }
-
-        h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            letter-spacing: 2px;
-            color: var(--text-main);
-            font-weight: 800;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            margin-top: 4px;
-            font-weight: normal;
-        }
-
+        h1 { margin: 0; font-size: 1.8rem; letter-spacing: 3px; font-weight: 800; color: var(--text-main); }
+        .subtitle { font-size: 0.75rem; color: var(--text-sub); margin-top: 4px; }
         .score-box {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #555;
-            background: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            font-size: 1.2rem; font-weight: bold; color: #666;
+            background: #F7F5F2; padding: 4px 14px; border-radius: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         #main-layout {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px 20px 20px;
-            gap: 30px;
+            flex: 1; display: flex; flex-direction: row;
+            align-items: center; justify-content: center;
+            padding: 0 20px 20px 20px; gap: 30px;
         }
 
         #board-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative; display: flex;
+            flex-direction: column; align-items: center;
         }
 
         #board {
@@ -104,148 +70,142 @@
             grid-template-columns: repeat(9, var(--cell-size));
             grid-template-rows: repeat(9, var(--cell-size));
             background-color: var(--board-bg);
-            border-radius: 12px;
-            position: relative;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03), 0 10px 20px rgba(0,0,0,0.05);
-            padding: 2px; 
+            border-radius: 16px; position: relative;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.04), 0 10px 25px rgba(0,0,0,0.05);
+            padding: 4px;
         }
 
         .grid-bg-cell {
-            width: 100%;
-            height: 100%;
-            border-radius: 4px;
-            border: 1px solid rgba(0,0,0,0.03); 
+            width: 100%; height: 100%;
+            border-radius: 6px;
+            border: 1px solid rgba(0,0,0,0.025);
         }
 
         #next-preview {
-            margin-top: 15px;
+            margin-top: 12px;
             width: calc(var(--cell-size) * 9);
-            height: calc(var(--cell-size) * 0.6);
-            display: flex;
-            opacity: 0.7;
+            height: calc(var(--cell-size) * 0.55);
+            display: flex; align-items: stretch;
+            gap: 2px; opacity: 0.85;
         }
 
+        /* ============ 方块（同色系深色描边）============ */
         .block {
             position: absolute;
             height: calc(var(--cell-size) - var(--gap));
-            border-radius: var(--radius);
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            border: 1.5px solid transparent;
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.35),
+                0 2px 5px rgba(0,0,0,0.08);
             z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             will-change: top, left, transform;
         }
 
         .block.falling { transition: top 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .block.dragging { 
-            z-index: 100; 
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
-            transition: left 0.05s linear; 
+        .block.dragging {
+            z-index: 100;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: left 0.05s linear;
             transform: scale(1.05);
         }
 
-        /* 更新后的莫兰迪色类 */
-        .type-1 { background-color: var(--color-1); }
-        .type-2 { background-color: var(--color-2); }
-        .type-3 { background-color: var(--color-3); }
-        .type-4 { background-color: var(--color-4); }
+        .block.eliminating {
+            animation: softGlow 0.4s ease-out forwards;
+            pointer-events: none; z-index: 50;
+        }
+        @keyframes softGlow {
+            0%   { transform: scale(1);    filter: brightness(1.1); opacity: 1; }
+            35%  { transform: scale(1.08); filter: brightness(1.6) drop-shadow(0 0 4px rgba(255,255,255,0.8)); }
+            100% { transform: scale(1.25); filter: brightness(0) blur(6px); opacity: 0; }
+        }
 
+        .c0 { background-color: var(--c-0); border-color: var(--cb-0); }
+        .c1 { background-color: var(--c-1); border-color: var(--cb-1); }
+        .c2 { background-color: var(--c-2); border-color: var(--cb-2); }
+        .c3 { background-color: var(--c-3); border-color: var(--cb-3); }
+        .c4 { background-color: var(--c-4); border-color: var(--cb-4); }
+
+        /* 方块内道具图标：黑棕色 */
         .block-item-icon {
-            font-size: calc(var(--cell-size) * 0.5);
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+            width: calc(var(--cell-size) * 0.52);
+            height: calc(var(--cell-size) * 0.52);
+            filter: drop-shadow(0 1px 1px rgba(255,255,255,0.4));
             pointer-events: none;
+            position: relative; z-index: 3;
         }
+        .block-item-icon svg { width: 100%; height: 100%; display: block; }
 
-        #item-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 15px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            height: auto;
-            justify-content: center;
-        }
-
-        .item-slot {
-            width: calc(var(--cell-size) * 1.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: grab;
-            transition: transform 0.1s;
-            position: relative;
-        }
-
-        .item-slot:active { transform: scale(0.95); }
-        .item-slot.locked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
-        
-        .item-icon-box {
-            font-size: 2rem;
-            margin-bottom: 4px;
-            background: #F0F2F5;
-            width: calc(var(--cell-size) * 1.4);
-            height: calc(var(--cell-size) * 1.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-        }
-
-        .item-name {
-            font-size: 0.75rem;
-            color: #666;
-            text-align: center;
-        }
-
-        .item-count-badge {
-            position: absolute;
-            top: 0; right: 0;
-            background: #FF6B6B;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .preview-segment { height: 100%; border-right: 1px solid #fff; }
-
-        #dragging-ghost {
-            position: fixed;
-            pointer-events: none;
-            z-index: 999;
-            font-size: 3rem;
-            opacity: 0.9;
-            transform: translate(-50%, -50%);
-            display: none;
-        }
-
-        .block.highlighted { 
-            filter: brightness(1.15); 
-            transform: scale(1.08); 
-            z-index: 50; 
-            box-shadow: 0 0 0 2px #fff, 0 0 15px rgba(0,0,0,0.1);
+        .block.highlighted {
+            filter: brightness(1.15);
+            transform: scale(1.06);
+            z-index: 50;
+            box-shadow: 0 0 0 2px #fff, 0 0 12px rgba(0,0,0,0.12);
         }
         .row-highlight {
             position: absolute; left: 0; width: 100%; height: var(--cell-size);
-            background: rgba(0,0,0,0.1); 
+            background: rgba(0,0,0,0.06);
+            border-top: 2px solid rgba(255,255,255,0.9);
+            border-bottom: 2px solid rgba(255,255,255,0.9);
             pointer-events: none; z-index: 40; display: none;
             border-radius: 8px;
         }
 
+        .preview-segment {
+            flex: none; border-radius: 5px;
+            border: 1.5px solid transparent;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        /* ============ 道具栏（还原原版配色）============ */
+        #item-sidebar {
+            display: flex; flex-direction: column; gap: 18px;
+            padding: 15px; background: #FBFAF8;
+            border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            justify-content: center; height: auto;
+        }
+        .item-slot {
+            width: calc(var(--cell-size) * 1.8);
+            display: flex; flex-direction: column;
+            align-items: center; cursor: grab;
+            transition: transform 0.1s; position: relative;
+        }
+        .item-slot:active { transform: scale(0.95); }
+        .item-slot.locked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+        .item-icon-box {
+            margin-bottom: 4px;
+            background: #F2F0EC;
+            width: calc(var(--cell-size) * 1.4); height: calc(var(--cell-size) * 1.4);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .item-icon-box svg { width: 58%; height: 58%; }
+        .item-name { font-size: 0.75rem; color: #777; text-align: center; }
+        .item-count-badge {
+            position: absolute; top: -4px; right: calc(var(--cell-size) * 0.1);
+            background: #E08794; color: white;
+            font-size: 0.7rem; font-weight: bold;
+            width: 16px; height: 16px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        /* 拖拽幽灵（使用道具原本的彩色）*/
+        #dragging-ghost {
+            position: fixed; pointer-events: none; z-index: 999;
+            width: calc(var(--cell-size) * 0.9);
+            height: calc(var(--cell-size) * 0.9);
+            opacity: 0.95;
+            transform: translate(-50%, -50%);
+            display: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+        #dragging-ghost svg { width: 100%; height: 100%; }
+
         .toast {
-            position: absolute;
-            top: 15%; left: 50%; transform: translateX(-50%);
-            background: rgba(50,50,50,0.9); color: #fff;
+            position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+            background: rgba(70,70,70,0.85); color: #fff;
             padding: 8px 20px; border-radius: 20px;
             font-size: 0.9rem; pointer-events: none;
             opacity: 0; transition: opacity 0.3s; z-index: 200;
@@ -253,30 +213,26 @@
 
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(5px);
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(6px);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { text-align: center; }
         button {
-            background: #333; color: #fff; border: none;
+            background: #6B7B8C; color: #fff; border: none;
             padding: 12px 40px; font-size: 1rem;
-            border-radius: 30px; cursor: pointer;
-            margin-top: 20px;
+            border-radius: 30px; cursor: pointer; margin-top: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        
+
         @media (max-width: 800px) {
-            #main-layout { flex-direction: column; padding: 10px; gap: 15px; }
-            #item-sidebar { flex-direction: row; width: 100%; justify-content: space-around; }
+            #main-layout { flex-direction: column; padding: 10px; gap: 12px; }
+            #item-sidebar { flex-direction: row; width: 100%; justify-content: space-around; gap: 8px; padding: 10px; }
             .item-slot { width: 22vw; }
-            .item-icon-box { width: 16vw; height: 16vw; font-size: 1.5rem; }
+            .item-icon-box { width: 15vw; height: 15vw; }
             .item-name { font-size: 0.65rem; }
             :root { --cell-size: 9.5vmin; }
-            #next-preview { width: calc(var(--cell-size) * 9); }
         }
     </style>
 </head>
@@ -293,52 +249,200 @@
             <div id="board"></div>
             <div id="next-preview"></div>
         </div>
-
-        <div id="item-sidebar">
-            <!-- 道具栏由JS生成 -->
-        </div>
+        <div id="item-sidebar"></div>
     </div>
 
     <div id="dragging-ghost"></div>
     <div id="row-highlight" class="row-highlight"></div>
-    <div id="toast" class="toast">获得道具!</div>
+    <div id="toast" class="toast"></div>
 
     <div id="start-modal" class="modal-overlay active">
-        <div class="modal-content">
-            <h1 style="color: #333;">Slidey</h1>
-            <button onclick="game.init()">开始游戏</button>
-        </div>
+        <h1>Slidey</h1>
+        <button onclick="game.init()">开始游戏</button>
     </div>
 
     <div id="gameover-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 style="font-size: 2rem; color: #333; margin-bottom: 10px;">游戏结束</h2>
-            <div style="font-size: 3rem; font-weight: 800; color: #555;" id="final-score">0</div>
-            <button onclick="game.init()">再来一局</button>
-        </div>
+        <h2 style="font-size:2rem; margin-bottom:10px;">游戏结束</h2>
+        <div style="font-size:3rem; font-weight:800; color:#666;" id="final-score">0</div>
+        <button onclick="game.init()">再来一局</button>
     </div>
 
 <script>
+    // ============ 音效系统 ============
+    const AudioSys = {
+        ctx: null, frictionNode: null, frictionGain: null, isInitialized: false,
+
+        init() {
+            if (!this.isInitialized) {
+                const AC = window.AudioContext || window.webkitAudioContext;
+                this.ctx = new AC();
+                this.isInitialized = true;
+                this.createFrictionBuffer();
+            }
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+        },
+
+        createFrictionBuffer() {
+            const size = this.ctx.sampleRate * 2;
+            const buffer = this.ctx.createBuffer(1, size, this.ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+            for (let i=0;i<size;i++){
+                const w = Math.random()*2-1;
+                b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+                b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+                b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+                data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11;
+                b6=w*0.115926;
+            }
+            this.frictionBuffer = buffer;
+        },
+
+        startFriction() {
+            if (!this.ctx) return;
+            this.stopFriction();
+            const src = this.ctx.createBufferSource();
+            src.buffer = this.frictionBuffer; src.loop = true;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type='lowpass'; filter.frequency.value=700;
+            const gain = this.ctx.createGain(); gain.gain.value=0.07;
+            src.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination);
+            src.start();
+            this.frictionNode=src; this.frictionGain=gain;
+        },
+
+        stopFriction() {
+            if (this.frictionNode) {
+                const t=this.ctx.currentTime;
+                this.frictionGain.gain.setValueAtTime(this.frictionGain.gain.value,t);
+                this.frictionGain.gain.exponentialRampToValueAtTime(0.001,t+0.1);
+                this.frictionNode.stop(t+0.1);
+                this.frictionNode=null;
+            }
+        },
+
+        /**
+         * "登登~" Q弹上行双音
+         * 音高弹簧曲线: 下潜蓄力 → 弹起过冲 → 回落 → 小回弹 → 稳定
+         * 叠加三角波果冻泛音，Q弹感十足
+         */
+        playDuang(step = 0) {
+            if (!this.ctx) return;
+            const t = this.ctx.currentTime;
+            const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.5];
+            const base = scale[Math.min(step, scale.length - 1)];
+            const note1 = base;
+            const note2 = base * 1.26;
+
+            const playNote = (freq, start, peak, dur) => {
+                // Q弹音高：像弹簧一样晃动上浮
+                const osc = this.ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq * 0.80, start);       // 下潜蓄力
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.12, start + 0.05); // 弹起过冲
+                osc.frequency.exponentialRampToValueAtTime(freq * 0.93, start + 0.10); // 回落
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.04, start + 0.15); // 小回弹
+                osc.frequency.exponentialRampToValueAtTime(freq, start + 0.22);        // 稳定
+
+                // 音量同步做Q弹起伏
+                const g = this.ctx.createGain();
+                g.gain.setValueAtTime(0.0001, start);
+                g.gain.exponentialRampToValueAtTime(peak, start + 0.01);
+                g.gain.exponentialRampToValueAtTime(peak * 0.7, start + 0.10);
+                g.gain.exponentialRampToValueAtTime(peak * 0.85, start + 0.16);
+                g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+
+                osc.connect(g); g.connect(this.ctx.destination);
+                osc.start(start); osc.stop(start + dur + 0.05);
+
+                // 果冻质感泛音（三角波 + 自身晃动）
+                const osc2 = this.ctx.createOscillator();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(freq * 2.0, start);
+                osc2.frequency.exponentialRampToValueAtTime(freq * 2.4, start + 0.06);
+                osc2.frequency.exponentialRampToValueAtTime(freq * 2.0, start + 0.14);
+
+                const g2 = this.ctx.createGain();
+                g2.gain.setValueAtTime(0.0001, start);
+                g2.gain.exponentialRampToValueAtTime(peak * 0.3, start + 0.01);
+                g2.gain.exponentialRampToValueAtTime(0.0001, start + dur * 0.4);
+
+                osc2.connect(g2); g2.connect(this.ctx.destination);
+                osc2.start(start); osc2.stop(start + dur * 0.5);
+            };
+
+            // 第一声 "登"：短促Q弹
+            playNote(note1, t, 0.28, 0.22);
+            // 第二声 "登~"：更高更弹，余韵悠长
+            playNote(note2, t + 0.10, 0.34, 0.5);
+        },
+
+        playPickup() {
+            if (!this.ctx) return;
+            const t = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, t);
+            osc.frequency.exponentialRampToValueAtTime(1174.7, t + 0.07);
+            const g = this.ctx.createGain();
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.exponentialRampToValueAtTime(0.15, t + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+            osc.connect(g); g.connect(this.ctx.destination);
+            osc.start(t); osc.stop(t + 0.16);
+        }
+    };
+
+    /* ============ 道具定义（可变色的 SVG 线性图标）============ */
+    // 侧边栏用彩色，方块内用黑棕色
     const ITEM_TYPES = [
-        { id: 'color', icon: '🌈', name: '同色消除' },
-        { id: 'row', icon: '➖', name: '整行消除' },
-        { id: 'move', icon: '🖐️', name: '单块移动' },
-        { id: 'single', icon: '💣', name: '单块消除' }
+        {
+            id: 'color', name: '同色消除', color: '#E5A9B5',
+            path: `<path d="M12 3.2 C12 3.2 6.2 10 6.2 14.4 A5.8 5.8 0 0 0 17.8 14.4 C17.8 10 12 3.2 12 3.2 Z"/>`
+        },
+        {
+            id: 'row', name: '整行消除', color: '#E2A76F',
+            path: `<path d="M10.2 13.8 L8.4 15.6 a3.3 3.3 0 0 1 -4.7 -4.7 L5.5 9.1 a3.3 3.3 0 0 1 4.7 0"/>
+                   <path d="M13.8 10.2 L15.6 8.4 a3.3 3.3 0 0 1 4.7 4.7 L18.5 14.9 a3.3 3.3 0 0 1 -4.7 0"/>
+                   <line x1="4.5" y1="4.5" x2="19.5" y2="19.5"/>`
+        },
+        {
+            id: 'move', name: '单块移动', color: '#9DBAD6',
+            path: `<line x1="12" y1="4.5" x2="12" y2="19.5"/>
+                   <line x1="4.5" y1="12" x2="19.5" y2="12"/>
+                   <path d="M9.6 6.9 L12 4.5 L14.4 6.9"/>
+                   <path d="M9.6 17.1 L12 19.5 L14.4 17.1"/>
+                   <path d="M6.9 9.6 L4.5 12 L6.9 14.4"/>
+                   <path d="M17.1 9.6 L19.5 12 L17.1 14.4"/>`
+        },
+        {
+            id: 'single', name: '单块消除', color: '#9C8FC9',
+            path: `<rect x="4" y="4" width="16" height="16" rx="4.5"/>
+                   <line x1="9.3" y1="9.3" x2="14.7" y2="14.7"/>
+                   <line x1="14.7" y1="9.3" x2="9.3" y2="14.7"/>`
+        }
     ];
+
+    const DARK_BROWN = '#5A4634'; // 方块内道具图标颜色
+
+    // 按指定颜色生成 SVG 图标
+    function iconSVG(item, color) {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${item.path}</svg>`;
+    }
+
+    const COLOR_COUNT = 5;
 
     class Game {
         constructor() {
-            this.score = 0;
-            this.turnCount = 0;
+            this.score = 0; this.turnCount = 0;
             this.isPlaying = false;
-            this.blocks = [];
-            this.grid = [];
+            this.blocks = []; this.grid = [];
             this.nextRowConfig = [];
             this.isFreeMoveMode = false;
-            
-            this.inventory = { 'color': 1, 'row': 1, 'move': 1, 'single': 1 };
-            this.drag = { active: false, blockId: null, startX: 0, initialC: 0, currentC: 0 };
-            this.itemDrag = { active: false, itemType: null };
+            this.comboLevel = 0;
+            this.inventory = { 'color':1, 'row':1, 'move':1, 'single':1 };
+            this.drag = { active:false, blockId:null, startX:0, initialC:0, currentC:0 };
+            this.itemDrag = { active:false, itemType:null };
 
             this.elements = {
                 board: document.getElementById('board'),
@@ -352,27 +456,25 @@
                 gameOverModal: document.getElementById('gameover-modal'),
                 finalScore: document.getElementById('final-score')
             };
-
             this.bindEvents();
             this.renderInventory();
         }
 
         init() {
-            this.score = 0;
-            this.turnCount = 0;
+            AudioSys.init();
+            this.score = 0; this.turnCount = 0; this.comboLevel = 0;
             this.updateScore(0);
             this.blocks = [];
             this.elements.board.innerHTML = '';
             this.isFreeMoveMode = false;
-            this.inventory = { 'color': 1, 'row': 1, 'move': 1, 'single': 1 };
+            this.inventory = { 'color':1, 'row':1, 'move':1, 'single':1 };
             this.renderInventory();
 
-            for (let i = 0; i < 81; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'grid-bg-cell';
+            for (let i=0;i<81;i++){
+                const cell=document.createElement('div');
+                cell.className='grid-bg-cell';
                 this.elements.board.appendChild(cell);
             }
-
             this.resetGrid();
             this.generateRow(7, true);
             this.generateRow(8, true);
@@ -384,53 +486,54 @@
             this.elements.gameOverModal.classList.remove('active');
         }
 
-        resetGrid() { this.grid = Array.from({length: 9}, () => Array(9).fill(null)); }
+        resetGrid(){ this.grid = Array.from({length:9},()=>Array(9).fill(null)); }
 
-        createBlock(r, c, w) {
+        createBlock(r, c, w, colorIdx) {
             const id = Date.now() + Math.random();
-            const type = w;
+            const color = (colorIdx !== undefined && colorIdx !== null)
+                ? colorIdx : Math.floor(Math.random() * COLOR_COUNT);
             const el = document.createElement('div');
-            el.className = `block type-${type}`;
+            el.className = `block c${color}`;
             el.style.width = `calc(var(--cell-size) * ${w} - var(--gap))`;
-            
+
             let itemId = null;
             if (Math.random() < 0.15) {
-                const randIndex = Math.floor(Math.random() * ITEM_TYPES.length);
-                itemId = ITEM_TYPES[randIndex].id;
-                const icon = document.createElement('span');
-                icon.className = 'block-item-icon';
-                icon.textContent = ITEM_TYPES[randIndex].icon;
-                el.appendChild(icon);
+                const it = ITEM_TYPES[Math.floor(Math.random()*ITEM_TYPES.length)];
+                itemId = it.id;
+                const iconWrap = document.createElement('span');
+                iconWrap.className = 'block-item-icon';
+                iconWrap.innerHTML = iconSVG(it, DARK_BROWN); // 黑棕色
+                el.appendChild(iconWrap);
             }
 
             this.setBlockPosition(el, r, c);
             this.elements.board.appendChild(el);
-            this.blocks.push({ id, r, c, w, type, el, itemId });
+            this.blocks.push({ id, r, c, w, color, el, itemId });
             this.updateGridMap(this.blocks[this.blocks.length-1], r, c);
         }
 
         setBlockPosition(el, r, c) {
-            el.style.top = `calc(var(--cell-size) * ${r} + 1px)`;
-            el.style.left = `calc(var(--cell-size) * ${c} + 1px)`;
+            el.style.top = `calc(var(--cell-size) * ${r} + 2px)`;
+            el.style.left = `calc(var(--cell-size) * ${c} + 2px)`;
         }
 
         updateGridMap(block, r, c) {
-            for(let row=0; row<9; row++) 
-                for(let col=0; col<9; col++) 
-                    if(this.grid[row][col] === block.id) this.grid[row][col] = null;
-            for(let i=0; i<block.w; i++) if(c+i < 9) this.grid[r][c+i] = block.id;
-            block.r = r; block.c = c;
+            for(let row=0;row<9;row++)
+                for(let col=0;col<9;col++)
+                    if(this.grid[row][col]===block.id) this.grid[row][col]=null;
+            for(let i=0;i<block.w;i++) if(c+i<9) this.grid[r][c+i]=block.id;
+            block.r=r; block.c=c;
         }
 
-        generateRow(r, isStart = false) {
-            let c = 0;
-            while (c < 9) {
-                const remaining = 9 - c;
-                const gapProb = isStart ? 0.5 : 0.25;
-                if (Math.random() < gapProb && remaining > 0) { c++; } 
+        generateRow(r, isStart=false) {
+            let c=0;
+            while(c<9){
+                const remaining=9-c;
+                const gapProb = isStart?0.5:0.25;
+                if(Math.random()<gapProb && remaining>0){ c++; }
                 else {
-                    const maxW = Math.min(4, remaining);
-                    let w = 1; const rand=Math.random();
+                    const maxW=Math.min(4,remaining);
+                    let w=1; const rand=Math.random();
                     if(rand<0.4)w=1; else if(rand<0.7)w=2; else if(rand<0.9)w=3; else w=maxW;
                     if(c+w>9)w=remaining;
                     this.createBlock(r, c, w);
@@ -440,465 +543,420 @@
         }
 
         generateNextRowConfig() {
-            this.nextRowConfig = [];
-            let c = 0;
-            while (c < 9) {
-                const remaining = 9 - c;
-                if (Math.random() < 0.25 && remaining > 0) { this.nextRowConfig.push(null); c++; } 
+            this.nextRowConfig=[];
+            let c=0;
+            while(c<9){
+                const remaining=9-c;
+                if(Math.random()<0.25 && remaining>0){ this.nextRowConfig.push(null); c++; }
                 else {
-                    const maxW = Math.min(4, remaining);
-                    let w = 1; const rand=Math.random();
+                    const maxW=Math.min(4,remaining);
+                    let w=1; const rand=Math.random();
                     if(rand<0.4)w=1; else if(rand<0.7)w=2; else if(rand<0.9)w=3; else w=maxW;
-                    if(c+w>9)w=remaining; this.nextRowConfig.push(w); c+=w;
+                    if(c+w>9)w=remaining;
+                    this.nextRowConfig.push({ w, color: Math.floor(Math.random()*COLOR_COUNT) });
+                    c+=w;
                 }
             }
         }
 
         renderPreview() {
-            this.elements.nextPreview.innerHTML = '';
-            this.nextRowConfig.forEach(w => {
-                const s = document.createElement('div');
-                s.className = 'preview-segment';
-                s.style.width = `calc(100% / 9 * ${w})`;
-                if(w) { s.classList.add(`type-${w}`); }
-                else s.style.background='transparent';
+            this.elements.nextPreview.innerHTML='';
+            this.nextRowConfig.forEach(item => {
+                const s=document.createElement('div');
+                s.className='preview-segment';
+                s.style.width=`calc(100% / 9 * ${item ? item.w : 1} - 2px)`;
+                if(item){ s.classList.add(`c${item.color}`); }
+                else { s.style.background='transparent'; s.style.borderColor='rgba(0,0,0,0.08)'; }
                 this.elements.nextPreview.appendChild(s);
             });
         }
 
-        // --- 核心物理结算：自动连消 ---
-        // 循环执行重力 -> 检查消除，直到稳定
         async resolveBoardState() {
-            let loopCount = 0;
-            while (true) {
+            this.comboLevel = 0;
+            let loop=0;
+            while(true){
                 await this.applyGravity();
-                const cleared = this.checkLines();
-                if (!cleared) break;
-                // 如果消除了，继续循环，因为消除后上方方块会掉落，可能再次消除
-                loopCount++;
-                if (loopCount > 20) break; // 防止死循环
+                const cleared=this.checkLines();
+                if(!cleared) break;
+                if(++loop>20) break;
             }
         }
 
         async applyGravity() {
-            let changed = true;
-            while(changed) {
-                changed = false;
-                const sorted = [...this.blocks].sort((a,b) => b.r - a.r);
-                const moves = [];
-                for(const b of sorted) {
-                    if(b.r === 8) continue;
-                    let canFall = true;
-                    for(let i=0; i<b.w; i++) {
-                        if(this.grid[b.r+1][b.c+i] !== null) { canFall=false; break; }
+            let changed=true;
+            while(changed){
+                changed=false;
+                const sorted=[...this.blocks].sort((a,b)=>b.r-a.r);
+                const moves=[];
+                for(const b of sorted){
+                    if(b.r===8) continue;
+                    let canFall=true;
+                    for(let i=0;i<b.w;i++){
+                        if(this.grid[b.r+1][b.c+i]!==null){ canFall=false; break; }
                     }
-                    if(canFall) {
-                        moves.push({block:b, r:b.r+1, c:b.c});
-                        changed=true;
-                    }
+                    if(canFall){ moves.push({block:b, r:b.r+1}); changed=true; }
                 }
-                if(moves.length>0) {
-                    moves.forEach(m => {
-                        for(let i=0; i<m.block.w; i++) {
-                            this.grid[m.block.r][m.block.c+i] = null;
-                            this.grid[m.r][m.block.c+i] = m.block.id;
+                if(moves.length>0){
+                    moves.forEach(m=>{
+                        for(let i=0;i<m.block.w;i++){
+                            this.grid[m.block.r][m.block.c+i]=null;
+                            this.grid[m.r][m.block.c+i]=m.block.id;
                         }
-                        m.block.r = m.r;
+                        m.block.r=m.r;
                     });
-                    moves.forEach(m => {
+                    moves.forEach(m=>{
                         m.block.el.classList.add('falling');
                         this.setBlockPosition(m.block.el, m.block.r, m.block.c);
                     });
-                    await new Promise(r=>setTimeout(r, 30)); 
-                    moves.forEach(m => m.block.el.classList.remove('falling'));
+                    await new Promise(r=>setTimeout(r,30));
+                    moves.forEach(m=>m.block.el.classList.remove('falling'));
                 }
             }
         }
 
         checkLines() {
-            const rowsToClear = [];
-            for(let r=0; r<9; r++) {
-                let full = true;
-                for(let c=0; c<9; c++) if(!this.grid[r][c]) full=false;
+            const rowsToClear=[];
+            for(let r=0;r<9;r++){
+                let full=true;
+                for(let c=0;c<9;c++) if(!this.grid[r][c]) full=false;
                 if(full) rowsToClear.push(r);
             }
-            if(rowsToClear.length>0) {
-                const ids = new Set();
-                rowsToClear.forEach(r => {
-                    for(let c=0; c<9; c++) {
-                        const bid = this.grid[r][c];
-                        if(bid) {
-                            const block = this.blocks.find(b => b.id === bid);
-                            if(block && block.itemId) this.addItem(block.itemId);
+            if(rowsToClear.length>0){
+                const ids=new Set();
+                rowsToClear.forEach(r=>{
+                    for(let c=0;c<9;c++){
+                        const bid=this.grid[r][c];
+                        if(bid){
+                            const b=this.blocks.find(x=>x.id===bid);
+                            if(b && b.itemId){ this.addItem(b.itemId); AudioSys.playPickup(); }
                             ids.add(bid);
                         }
                     }
                 });
-                
-                this.blocks = this.blocks.filter(b => {
-                    if(ids.has(b.id)) { b.el.remove(); return false; }
-                    return true;
-                });
-                
+
+                AudioSys.playDuang(this.comboLevel);
+                this.comboLevel++;
+
+                const rm=this.blocks.filter(b=>ids.has(b.id));
+                rm.forEach(b=>b.el.classList.add('eliminating'));
+                setTimeout(()=>rm.forEach(b=>b.el.remove()),200);
+                this.blocks=this.blocks.filter(b=>!ids.has(b.id));
                 this.resetGrid();
-                this.blocks.forEach(b => this.updateGridMap(b, b.r, b.c));
-                
-                const pts = rowsToClear.length * 100 * Math.pow(2, rowsToClear.length-1);
-                this.updateScore(this.score + pts);
+                this.blocks.forEach(b=>this.updateGridMap(b,b.r,b.c));
+                const pts=rowsToClear.length*100*Math.pow(2,rowsToClear.length-1);
+                this.updateScore(this.score+pts);
                 return true;
             }
             return false;
         }
 
         async addNewRow() {
-            if(this.blocks.some(b=>b.r===0)) { this.gameOver(); return; }
-            
-            this.blocks.forEach(b => {
-                b.r -= 1;
+            if(this.blocks.some(b=>b.r===0)){ this.gameOver(); return; }
+            this.blocks.forEach(b=>{
+                b.r-=1;
                 b.el.classList.add('falling');
-                b.el.style.transition = 'top 0.2s ease-out';
-                this.setBlockPosition(b.el, b.r, b.c);
+                b.el.style.transition='top 0.2s ease-out';
+                this.setBlockPosition(b.el,b.r,b.c);
             });
             this.resetGrid();
-            this.blocks.forEach(b => this.updateGridMap(b, b.r, b.c));
-            await new Promise(r=>setTimeout(r, 150));
-            this.blocks.forEach(b => { b.el.classList.remove('falling'); b.el.style.transition=''; });
+            this.blocks.forEach(b=>this.updateGridMap(b,b.r,b.c));
+            await new Promise(r=>setTimeout(r,150));
+            this.blocks.forEach(b=>{ b.el.classList.remove('falling'); b.el.style.transition=''; });
 
             let c=0;
-            this.nextRowConfig.forEach(w => {
-                if(w) this.createBlock(8, c, w);
-                c+=w;
+            this.nextRowConfig.forEach(item=>{
+                if(item){ this.createBlock(8, c, item.w, item.color); c+=item.w; }
+                else c+=1;
             });
             this.generateNextRowConfig();
             this.renderPreview();
-            
-            // 关键：添加新行后，立即执行物理结算（自动消除新行造成的满行）
             await this.resolveBoardState();
         }
 
         // --- 道具系统 ---
         renderInventory() {
-            this.elements.sidebar.innerHTML = '';
-            ITEM_TYPES.forEach(item => {
-                const count = this.inventory[item.id] || 0;
-                const slot = document.createElement('div');
-                slot.className = `item-slot ${count === 0 ? 'locked' : ''}`;
-                const iconBox = document.createElement('div');
-                iconBox.className = 'item-icon-box';
-                iconBox.textContent = item.icon;
-                const name = document.createElement('div');
-                name.className = 'item-name';
-                name.textContent = item.name;
+            this.elements.sidebar.innerHTML='';
+            ITEM_TYPES.forEach(item=>{
+                const count=this.inventory[item.id]||0;
+                const slot=document.createElement('div');
+                slot.className=`item-slot ${count===0?'locked':''}`;
 
-                if (count > 1) {
-                    const badge = document.createElement('div');
-                    badge.className = 'item-count-badge';
-                    badge.textContent = count;
-                    slot.appendChild(badge);
-                }
+                const box=document.createElement('div');
+                box.className='item-icon-box';
+                box.innerHTML=iconSVG(item, item.color); // 侧边栏保持彩色
 
-                slot.appendChild(iconBox);
+                const name=document.createElement('div');
+                name.className='item-name';
+                name.textContent=item.name;
+
+                const badge=document.createElement('div');
+                badge.className='item-count-badge';
+                badge.textContent=count;
+                box.appendChild(badge);
+
+                slot.appendChild(box);
                 slot.appendChild(name);
 
-                if (count > 0) {
-                    slot.onmousedown = (e) => this.handleItemStart(e, item);
-                    slot.ontouchstart = (e) => this.handleItemStart(e, item);
+                if(count>0){
+                    slot.onmousedown=(e)=>this.handleItemStart(e,item);
+                    slot.ontouchstart=(e)=>this.handleItemStart(e,item);
                 }
                 this.elements.sidebar.appendChild(slot);
             });
         }
 
-        addItem(typeId) {
-            if (this.inventory[typeId] < 2) {
+        addItem(typeId){
+            if(this.inventory[typeId]<2){
                 this.inventory[typeId]++;
                 this.renderInventory();
             }
         }
-
-        useItem(typeId) {
-            if (this.inventory[typeId] > 0) {
+        useItem(typeId){
+            if(this.inventory[typeId]>0){
                 this.inventory[typeId]--;
                 this.renderInventory();
             }
         }
-
-        showToast(msg) {
-            this.elements.toast.textContent = msg;
-            this.elements.toast.style.opacity = 1;
-            setTimeout(() => this.elements.toast.style.opacity = 0, 1500);
+        showToast(msg){
+            this.elements.toast.textContent=msg;
+            this.elements.toast.style.opacity=1;
+            setTimeout(()=>this.elements.toast.style.opacity=0,1500);
         }
 
-        handleItemStart(e, item) {
-            if (!this.isPlaying) return;
-            if (e.cancelable) e.preventDefault(); 
-            const point = e.touches ? e.touches[0] : e;
-            this.itemDrag = { active: true, itemType: item.id };
-            this.elements.ghost.textContent = item.icon;
-            this.elements.ghost.style.display = 'block';
-            this.elements.ghost.style.left = point.clientX + 'px';
-            this.elements.ghost.style.top = point.clientY + 'px';
+        handleItemStart(e,item){
+            if(!this.isPlaying) return;
+            if(e.cancelable) e.preventDefault();
+            const p=e.touches?e.touches[0]:e;
+            this.itemDrag={active:true,itemType:item.id};
+            this.elements.ghost.innerHTML=iconSVG(item, item.color); // 拖拽时保持彩色
+            this.elements.ghost.style.display='block';
+            this.elements.ghost.style.left=p.clientX+'px';
+            this.elements.ghost.style.top=p.clientY+'px';
         }
 
-        handleItemMove(x, y) {
-            if (!this.itemDrag.active) return;
-            this.elements.ghost.style.left = x + 'px';
-            this.elements.ghost.style.top = y + 'px';
-            
-            const boardRect = this.elements.board.getBoundingClientRect();
-            if (x >= boardRect.left && x <= boardRect.right && y >= boardRect.top && y <= boardRect.bottom) {
-                const cellSize = boardRect.width / 9;
-                const c = Math.floor((x - boardRect.left) / cellSize);
-                const r = Math.floor((y - boardRect.top) / cellSize);
-                this.highlightEffect(this.itemDrag.itemType, r, c);
-            } else {
-                this.clearHighlight();
-            }
+        handleItemMove(x,y){
+            if(!this.itemDrag.active) return;
+            this.elements.ghost.style.left=x+'px';
+            this.elements.ghost.style.top=y+'px';
+            const rect=this.elements.board.getBoundingClientRect();
+            if(x>=rect.left&&x<=rect.right&&y>=rect.top&&y<=rect.bottom){
+                const cs=rect.width/9;
+                const c=Math.floor((x-rect.left)/cs);
+                const r=Math.floor((y-rect.top)/cs);
+                this.highlightEffect(this.itemDrag.itemType,r,c);
+            } else this.clearHighlight();
         }
 
-        async handleItemEnd(x, y) {
-            if (!this.itemDrag.active) return;
-            this.elements.ghost.style.display = 'none';
-            const itemType = this.itemDrag.itemType;
-            this.itemDrag.active = false;
+        async handleItemEnd(x,y){
+            if(!this.itemDrag.active) return;
+            this.elements.ghost.style.display='none';
+            const itemType=this.itemDrag.itemType;
+            this.itemDrag.active=false;
             this.clearHighlight();
 
-            const boardRect = this.elements.board.getBoundingClientRect();
-            const onBoard = (x >= boardRect.left && x <= boardRect.right && y >= boardRect.top && y <= boardRect.bottom);
+            const rect=this.elements.board.getBoundingClientRect();
+            const onBoard=x>=rect.left&&x<=rect.right&&y>=rect.top&&y<=rect.bottom;
 
-            if (onBoard) {
-                if (itemType === 'move') {
+            if(onBoard){
+                if(itemType==='move'){
                     this.activateFreeMoveMode();
                     this.useItem(itemType);
                 } else {
-                    const cellSize = boardRect.width / 9;
-                    const c = Math.floor((x - boardRect.left) / cellSize);
-                    const r = Math.floor((y - boardRect.top) / cellSize);
-                    
-                    const targetBlockId = this.grid[r][c];
-                    let success = false;
+                    const cs=rect.width/9;
+                    const c=Math.floor((x-rect.left)/cs);
+                    const r=Math.floor((y-rect.top)/cs);
+                    const targetId=this.grid[r][c];
+                    let success=false;
 
-                    if (itemType === 'single' && targetBlockId) {
-                        this.eliminateBlock(targetBlockId);
-                        success = true;
-                    } else if (itemType === 'color' && targetBlockId) {
-                        const targetBlock = this.blocks.find(b => b.id === targetBlockId);
-                        if (targetBlock) {
-                            this.eliminateColor(targetBlock.type);
-                            success = true;
-                        }
-                    } else if (itemType === 'row') {
-                        this.eliminateRow(r);
-                        success = true;
+                    if(itemType==='single'&&targetId){
+                        await this.eliminateBlock(targetId); success=true;
+                    } else if(itemType==='color'&&targetId){
+                        const tb=this.blocks.find(b=>b.id===targetId);
+                        if(tb){ await this.eliminateColor(tb.color); success=true; }
+                    } else if(itemType==='row'){
+                        await this.eliminateRow(r); success=true;
                     }
 
-                    if (success) {
+                    if(success){
                         this.useItem(itemType);
-                        // 道具使用后，执行统一的物理结算
+                        await new Promise(r=>setTimeout(r,250));
                         await this.resolveBoardState();
-                        // 结算完后再决定是否刷新
-                        if (this.isPlaying) {
-                             // 只有当是主动回合（非道具触发内部循环）才推进回合？不，道具也是操作。
-                             // 统一在 afterAction 中处理新行逻辑
-                             await this.turnEndLogic();
-                        }
+                        if(this.isPlaying) await this.turnEndLogic();
                     }
                 }
             }
         }
 
-        highlightEffect(type, r, c) {
+        highlightEffect(type,r,c){
             this.clearHighlight();
-            const targetId = this.grid[r][c];
-            if (type === 'single' && targetId) {
-                const b = this.blocks.find(bl => bl.id === targetId);
+            const targetId=this.grid[r][c];
+            if(type==='single'&&targetId){
+                const b=this.blocks.find(x=>x.id===targetId);
                 if(b) b.el.classList.add('highlighted');
-            } else if (type === 'color' && targetId) {
-                const b = this.blocks.find(bl => bl.id === targetId);
-                if(b) {
-                    this.blocks.forEach(bl => {
-                        if (bl.type === b.type) bl.el.classList.add('highlighted');
-                    });
-                }
-            } else if (type === 'row') {
-                const hl = this.elements.rowHighlight;
-                hl.style.top = `calc(var(--cell-size) * ${r})`;
-                hl.style.display = 'block';
+            } else if(type==='color'&&targetId){
+                const b=this.blocks.find(x=>x.id===targetId);
+                if(b) this.blocks.forEach(x=>{ if(x.color===b.color) x.el.classList.add('highlighted'); });
+            } else if(type==='row'){
+                const hl=this.elements.rowHighlight;
+                hl.style.top=`calc(var(--cell-size) * ${r})`;
+                hl.style.display='block';
             }
         }
 
-        clearHighlight() {
-            this.blocks.forEach(b => b.el.classList.remove('highlighted'));
-            this.elements.rowHighlight.style.display = 'none';
+        clearHighlight(){
+            this.blocks.forEach(b=>b.el.classList.remove('highlighted'));
+            this.elements.rowHighlight.style.display='none';
         }
 
-        activateFreeMoveMode() {
-            this.isFreeMoveMode = true;
+        activateFreeMoveMode(){
+            this.isFreeMoveMode=true;
             this.showToast("自由移动模式开启");
-            setTimeout(() => {
-                this.isFreeMoveMode = false;
-                this.showToast("自由移动模式关闭");
-            }, 5000);
+            setTimeout(()=>{ this.isFreeMoveMode=false; },5000);
         }
 
-        eliminateBlock(id) {
-            const block = this.blocks.find(b => b.id === id);
-            if (block) {
-                if (block.itemId) this.addItem(block.itemId);
-                block.el.remove();
-                this.blocks = this.blocks.filter(b => b.id !== id);
-            }
-        }
-
-        eliminateColor(type) {
-            const toRemove = this.blocks.filter(b => b.type === type);
-            toRemove.forEach(b => {
-                if (b.itemId) this.addItem(b.itemId);
-                b.el.remove();
+        async playEliminateEffect(blocks){
+            if(!blocks||blocks.length===0) return;
+            AudioSys.playDuang(this.comboLevel);
+            this.comboLevel++;
+            blocks.forEach(b=>{
+                b.el.classList.add('eliminating');
+                if(b.itemId){ this.addItem(b.itemId); AudioSys.playPickup(); }
             });
-            this.blocks = this.blocks.filter(b => b.type !== type);
+            setTimeout(()=>blocks.forEach(b=>b.el.remove()),200);
+            await new Promise(r=>setTimeout(r,250));
         }
 
-        eliminateRow(r) {
-            const toRemove = this.blocks.filter(b => b.r === r);
-            toRemove.forEach(b => {
-                if (b.itemId) this.addItem(b.itemId);
-                b.el.remove();
-            });
-            this.blocks = this.blocks.filter(b => b.r !== r);
+        async eliminateBlock(id){
+            const b=this.blocks.find(x=>x.id===id);
+            if(b){ await this.playEliminateEffect([b]); this.blocks=this.blocks.filter(x=>x.id!==id); }
+        }
+        async eliminateColor(color){
+            const rm=this.blocks.filter(b=>b.color===color);
+            await this.playEliminateEffect(rm);
+            this.blocks=this.blocks.filter(b=>b.color!==color);
+        }
+        async eliminateRow(r){
+            const rm=this.blocks.filter(b=>b.r===r);
+            await this.playEliminateEffect(rm);
+            this.blocks=this.blocks.filter(b=>b.r!==r);
         }
 
-        // 回合结束逻辑：计算分数、奖励道具、添加新行
-        async turnEndLogic() {
-            if (this.blocks.length === 0) {
-                // 棋盘空了，立即补一行
-                await this.addNewRow();
-                return;
-            }
-
+        async turnEndLogic(){
+            if(this.blocks.length===0){ await this.addNewRow(); return; }
             this.turnCount++;
-            if (this.turnCount % 10 === 0) {
-                const randomType = ITEM_TYPES[Math.floor(Math.random() * ITEM_TYPES.length)].id;
-                this.addItem(randomType);
+            if(this.turnCount%10===0){
+                const rt=ITEM_TYPES[Math.floor(Math.random()*ITEM_TYPES.length)].id;
+                this.addItem(rt);
+                this.showToast("奖励道具 +1");
             }
             await this.addNewRow();
         }
 
-        updateScore(s) { this.score=s; this.elements.score.innerText=s; }
-        gameOver() { this.isPlaying=false; this.elements.finalScore.innerText=this.score; this.elements.gameOverModal.classList.add('active'); }
+        updateScore(s){ this.score=s; this.elements.score.innerText=s; }
+        gameOver(){
+            this.isPlaying=false;
+            this.elements.finalScore.innerText=this.score;
+            this.elements.gameOverModal.classList.add('active');
+        }
 
         bindEvents() {
-            const start = (x, y) => {
+            const start=(x,y)=>{
                 if(!this.isPlaying) return;
-                const el = document.elementFromPoint(x, y);
-                if(el && el.closest('.item-slot')) return;
-
-                const boardRect = this.elements.board.getBoundingClientRect();
-                if(x >= boardRect.left && x <= boardRect.right && y >= boardRect.top && y <= boardRect.bottom) {
-                    const cellSize = boardRect.width / 9;
-                    const c = Math.floor((x - boardRect.left) / cellSize);
-                    const r = Math.floor((y - boardRect.top) / cellSize);
-                    const blockId = this.grid[r][c];
-                    if(blockId) {
-                        const block = this.blocks.find(b => b.id === blockId);
-                        this.drag = { active: true, blockId, startX: x, initialC: block.c, currentC: block.c };
+                const el=document.elementFromPoint(x,y);
+                if(el&&el.closest('.item-slot')) return;
+                const rect=this.elements.board.getBoundingClientRect();
+                if(x>=rect.left&&x<=rect.right&&y>=rect.top&&y<=rect.bottom){
+                    const cs=rect.width/9;
+                    const c=Math.floor((x-rect.left)/cs);
+                    const r=Math.floor((y-rect.top)/cs);
+                    const bid=this.grid[r][c];
+                    if(bid){
+                        const block=this.blocks.find(b=>b.id===bid);
+                        this.drag={active:true,blockId:bid,startX:x,initialC:block.c,currentC:block.c};
                         block.el.classList.add('dragging');
-                        block.el.style.transition = 'none';
+                        block.el.style.transition='none';
+                        AudioSys.startFriction();
                     }
                 }
             };
 
-            const move = (x, y) => {
-                if (this.itemDrag.active) { this.handleItemMove(x, y); return; }
-                if (!this.drag.active) return;
+            const move=(x,y)=>{
+                if(this.itemDrag.active){ this.handleItemMove(x,y); return; }
+                if(!this.drag.active) return;
+                const block=this.blocks.find(b=>b.id===this.drag.blockId);
+                if(!block) return;
+                const rect=this.elements.board.getBoundingClientRect();
+                const cs=rect.width/9;
 
-                const block = this.blocks.find(b => b.id === this.drag.blockId);
-                if (!block) return;
-                const boardRect = this.elements.board.getBoundingClientRect();
-                const cellSize = boardRect.width / 9;
-
-                if (this.isFreeMoveMode) {
-                    const relX = x - boardRect.left;
-                    const relY = y - boardRect.top;
-                    let targetC = Math.round(relX / cellSize);
-                    let targetR = Math.round(relY / cellSize);
-                    if(targetC < 0) targetC = 0; if(targetC + block.w > 9) targetC = 9 - block.w;
-                    if(targetR < 0) targetR = 0; if(targetR > 8) targetR = 8;
-                    this.drag.currentC = targetC;
-                    block.el.style.left = `${targetC * cellSize + 1}px`;
-                    block.el.style.top = `${targetR * cellSize + 1}px`;
-                    block.el.dataset.tempR = targetR; 
+                if(this.isFreeMoveMode){
+                    let tc=Math.round((x-rect.left)/cs);
+                    let tr=Math.round((y-rect.top)/cs);
+                    if(tc<0)tc=0; if(tc+block.w>9)tc=9-block.w;
+                    if(tr<0)tr=0; if(tr>8)tr=8;
+                    this.drag.currentC=tc;
+                    block.el.style.left=`${tc*cs+2}px`;
+                    block.el.style.top=`${tr*cs+2}px`;
+                    block.el.dataset.tempR=tr;
                 } else {
-                    const deltaX = x - this.drag.startX;
-                    const deltaCol = Math.round(deltaX / cellSize);
-                    let targetC = this.drag.initialC + deltaCol;
-                    if (targetC < 0) targetC = 0;
-                    if (targetC + block.w > 9) targetC = 9 - block.w;
-
-                    let collision = false;
-                    for (let checkC = targetC; checkC < targetC + block.w; checkC++) {
-                        if (this.grid[block.r][checkC] !== null && this.grid[block.r][checkC] !== block.id) {
-                            collision = true; break;
-                        }
+                    const dc=Math.round((x-this.drag.startX)/cs);
+                    let tc=this.drag.initialC+dc;
+                    if(tc<0)tc=0;
+                    if(tc+block.w>9)tc=9-block.w;
+                    let col=false;
+                    for(let k=tc;k<tc+block.w;k++){
+                        if(this.grid[block.r][k]!==null&&this.grid[block.r][k]!==block.id){ col=true; break; }
                     }
-                    if (!collision) {
-                        this.drag.currentC = targetC;
-                        block.el.style.left = `${targetC * cellSize + 1}px`;
+                    if(!col){
+                        this.drag.currentC=tc;
+                        block.el.style.left=`${tc*cs+2}px`;
                     }
                 }
             };
 
-            const end = async (x, y) => {
-                if (this.itemDrag.active) { await this.handleItemEnd(x, y); return; }
-                if (!this.drag.active) return;
-
-                const block = this.blocks.find(b => b.id === this.drag.blockId);
-                if (!block) { this.drag.active = false; return; }
-
+            const end=async(x,y)=>{
+                if(this.itemDrag.active){ await this.handleItemEnd(x,y); return; }
+                AudioSys.stopFriction();
+                if(!this.drag.active) return;
+                const block=this.blocks.find(b=>b.id===this.drag.blockId);
+                if(!block){ this.drag.active=false; return; }
                 block.el.classList.remove('dragging');
-                this.drag.active = false;
+                this.drag.active=false;
 
-                const boardRect = this.elements.board.getBoundingClientRect();
-                const cellSize = boardRect.width / 9;
-                let finalC = this.drag.currentC;
-                let finalR = block.r;
+                const rect=this.elements.board.getBoundingClientRect();
+                const cs=rect.width/9;
+                const fc=this.drag.currentC;
+                let fr=block.r;
 
-                if (this.isFreeMoveMode) {
-                    finalR = parseInt(block.el.dataset.tempR || block.r);
-                    let canPlace = true;
-                    for(let i=0; i<block.w; i++) {
-                        const existingId = this.grid[finalR][finalC + i];
-                        if(existingId && existingId !== block.id) { canPlace = false; break; }
+                if(this.isFreeMoveMode){
+                    fr=parseInt(block.el.dataset.tempR||block.r);
+                    let ok=true;
+                    for(let i=0;i<block.w;i++){
+                        const ex=this.grid[fr][fc+i];
+                        if(ex&&ex!==block.id){ ok=false; break; }
                     }
-                    if(canPlace) {
-                        for(let i=0; i<block.w; i++) this.grid[block.r][block.c+i] = null;
-                        for(let i=0; i<block.w; i++) this.grid[finalR][finalC+i] = block.id;
-                        block.r = finalR; block.c = finalC;
-                        this.isFreeMoveMode = false;
-                        this.showToast("自由移动结束");
+                    if(ok){
+                        for(let i=0;i<block.w;i++) this.grid[block.r][block.c+i]=null;
+                        for(let i=0;i<block.w;i++) this.grid[fr][fc+i]=block.id;
+                        block.r=fr; block.c=fc;
+                        this.isFreeMoveMode=false;
                     }
                 } else {
-                    for(let i=0; i<block.w; i++) this.grid[block.r][block.c+i] = null;
-                    block.c = finalC;
-                    for(let i=0; i<block.w; i++) this.grid[block.r][finalC+i] = block.id;
+                    for(let i=0;i<block.w;i++) this.grid[block.r][block.c+i]=null;
+                    block.c=fc;
+                    for(let i=0;i<block.w;i++) this.grid[block.r][fc+i]=block.id;
                 }
 
-                this.setBlockPosition(block.el, block.r, block.c);
-                
-                // 拖拽结束：统一执行物理结算（包含自动连消）
+                this.setBlockPosition(block.el,block.r,block.c);
                 await this.resolveBoardState();
-                
-                // 物理稳定后，执行回合逻辑（添加新行等）
-                if (this.isPlaying) {
-                    await this.turnEndLogic();
-                }
+                if(this.isPlaying) await this.turnEndLogic();
             };
 
-            document.addEventListener('touchstart', e => start(e.touches[0].clientX, e.touches[0].clientY), {passive:false});
-            document.addEventListener('touchmove', e => { e.preventDefault(); move(e.touches[0].clientX, e.touches[0].clientY); }, {passive:false});
-            document.addEventListener('touchend', e => end(e.changedTouches[0].clientX, e.changedTouches[0].clientY));
-            document.addEventListener('mousedown', e => start(e.clientX, e.clientY));
-            document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
-            document.addEventListener('mouseup', e => end(e.clientX, e.clientY));
+            document.addEventListener('touchstart',e=>start(e.touches[0].clientX,e.touches[0].clientY),{passive:false});
+            document.addEventListener('touchmove',e=>{ e.preventDefault(); move(e.touches[0].clientX,e.touches[0].clientY); },{passive:false});
+            document.addEventListener('touchend',e=>end(e.changedTouches[0].clientX,e.changedTouches[0].clientY));
+            document.addEventListener('mousedown',e=>start(e.clientX,e.clientY));
+            document.addEventListener('mousemove',e=>move(e.clientX,e.clientY));
+            document.addEventListener('mouseup',e=>end(e.clientX,e.clientY));
         }
     }
 
